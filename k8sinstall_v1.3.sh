@@ -36,6 +36,8 @@ sudo sysctl --system
 #--[1.4]- Disable swap  
 sudo swapoff -a  
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab  
+sudo sed -i '/ swap / s/^/#/' /etc/fstab
+
 
 #--[1.5]- Install  necessary 
 sudo apt-get update  
