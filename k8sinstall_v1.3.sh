@@ -1,7 +1,7 @@
 #!/bin/bash
 #----------------------------------------------------------------------------------------------------------------------------------------
 #--[1.1]- Modules 
-tee /etc/modules-load.d/containerd.conf <<EOF
+sudo tee /etc/modules-load.d/containerd.conf <<EOF
 overlay
 br_netfilter
 EOF
@@ -20,7 +20,7 @@ sudo modprobe br_netfilter
 #--         To achieve this, tunable parameters in the kernel bridge module are automatically set when the kubeadm package is installed and a 
 #--         sysctl file is created at /etc/sysctl.d/99-kubernetes-cri.conf that contains the following lines: 
  
-tee /etc/sysctl.d/99-kubernetes-cri.conf <<EOT
+sudo tee /etc/sysctl.d/99-kubernetes-cri.conf <<EOT
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 net.ipv4.ip_forward = 1
@@ -38,8 +38,8 @@ sudo swapoff -a
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab  
 
 #--[1.5]- Install  necessary 
-apt-get update  
-apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common gpg
+sudo apt-get update  
+sudo apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common gpg
  
 ############################################################################################################################################
 #--[2]- Install containerd
