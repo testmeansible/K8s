@@ -1,0 +1,4 @@
+run namespace file
+run namespace-annotation file
+run ip-pool file
+then run the pod

@@ -1,0 +1,24 @@
+# team-a-namespace-annotation.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-a
+  annotations:
+    cni.projectcalico.org/ipv4pools: '["team-a-ip-pool"]'
+---
+# team-b-namespace-annotation.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-b
+  annotations:
+    cni.projectcalico.org/ipv4pools: '["team-b-ip-pool"]'
+---
+# team-c-namespace-annotation.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-c
+  annotations:
+    cni.projectcalico.org/ipv4pools: '["team-c-ip-pool"]'
+

@@ -1,0 +1,26 @@
+# team-a-ip-pool-binding.yaml
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-a-ip-pool-binding
+spec:
+  ipPool: team-a-ip-pool
+  namespaceSelector: has(team-a)
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-b-ip-pool-binding
+spec:
+  ipPool: team-a-ip-pool
+  namespaceSelector: has(team-b)
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-c-ip-pool-binding
+spec:
+  ipPool: team-a-ip-pool
+  namespaceSelector: has(team-c)
+

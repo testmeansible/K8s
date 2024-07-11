@@ -1,0 +1,26 @@
+# namespaces.yaml
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-a
+  labels:
+    team: team-a
+    
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-b
+  labels:
+    team: team-b
+    
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-c
+  labels:
+    team: team-c
+
+

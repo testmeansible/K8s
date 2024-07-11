@@ -1,0 +1,38 @@
+# ip-pools.yaml
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-a-ip-pool
+spec:
+  cidr: 172.16.1.0/24
+  ipipMode: CrossSubnet
+  natOutgoing: true
+  nodeSelector: all()
+  natOutgoing: true
+  disabled: false
+  blockSize: 26
+  
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-b-ip-pool
+spec:
+  cidr: 172.16.2.0/24
+  ipipMode: Never
+  natOutgoing: true
+  nodeSelector: all()
+  blockSize: 26
+  
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-c-ip-pool
+spec:
+  cidr: 172.16.3.0/24
+  ipipMode: Never
+  natOutgoing: true
+  nodeSelector: all()
+  blockSize: 26
+

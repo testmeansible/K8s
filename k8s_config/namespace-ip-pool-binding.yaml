@@ -1,0 +1,19 @@
+# namespace-ip-pool-binding.yaml
+---
+apiVersion: projectcalico.org/v3
+kind: IPPoolClaim
+metadata:
+  name: team-a-ip-pool-claim
+spec:
+  cidr: 172.16.1.0/24
+  ipPool: team-a-ip-pool
+
+---
+apiVersion: projectcalico.org/v3
+kind: IPPoolClaim
+metadata:
+  name: team-b-ip-pool-claim
+spec:
+  cidr: 172.16.2.0/24
+  ipPool: team-b-ip-pool
+

@@ -1,0 +1,19 @@
+apiVersion: crd.projectcalico.org/v1
+kind: NetworkPolicy
+metadata:
+  name: team-a-network-policy
+  namespace: team-a
+spec:
+  selector: all()
+  types:
+  - Ingress
+  - Egress
+  ingress:
+  - action: Allow
+    source:
+      selector: team == 'team-a'
+  egress:
+  - action: Allow
+    destination:
+      selector: team == 'team-a'
+

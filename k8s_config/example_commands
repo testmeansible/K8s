@@ -1,0 +1,97 @@
+sudo apt install git
+git clone https://github.com/testmeansible/K8s.git
+ls
+cd K8s/
+ls
+sudo chmod +x k8sinstall_v1.3.sh 
+./k8sinstall_v1.3.sh 
+sudo nano /etc/fstab 
+sudo systemctl enable kubelet
+sudo systemctl start kubelet
+sudo systemctl status kubelet
+sudo kubeadm config images pull
+sudo kubeadm init --pod-network-cidr=10.10.0.0/16
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+sudo nano /etc/default/kubelet 
+sudo nano /etc/hosts
+ping 192.168.3.197
+ping 192.168.3.196
+ping k8s-wv1-01
+ping k8s-wv1-02
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/manifests/tigera-operator.yaml
+curl https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/manifests/custom-resources.yaml -O
+sudo nano custom-resources.yaml 
+kubectl create -f custom-resources.yaml 
+watch kubectl get pods -n calico-system
+kubectl get nodes -o wide
+kubectl get nodes 
+watch kubectl get pods -A
+kubectl get nodes 
+curl -L https://github.com/projectcalico/calico/releases/download/v3.28.0/calicoctl-linux-amd64 -o calicoctl
+echo $PATH
+sudo chmod +x ./calicoctl 
+chmod +x ./calicoctl 
+calicoctl -h
+calicoctl get ippools
+kubectl get ippools
+calicoctl get ippools
+calicoctl get ippools -o wide
+kubectl get installation default -o go-template --template {{.spec.cni.ipam.type}}
+calicoctl ipam --show-blocks
+calicoctl ipam show --show-blocks
+kubectl get networkpolicy
+kubectl get nodes -o wide
+python3 -m http.server
+calicoctl get namespaces
+kubectl get namespaces
+calicoctl get nodes
+kubectl get nodes
+kubectl describe namespace team-a
+kubectl get services -n team-a
+kubectl get pods -n team-a
+kubectl delete pods --all -n team-a
+kubectl get pods -n team-a
+kubectl delete pod,service nginx-deployment nginx-service
+kubectl delete pod,service nginx-deployment nginx-service -n team-a
+kubectl get pods -n team-a
+kubectl delete pods --all -n team-a
+kubectl delete  nginx-deployment -n team-a
+kubectl delete pods --all -n team-a
+   98  kubectl get pods -n team-a
+   99  kubectl get deployments -n team-a
+  100  kubectl get services -n team-a
+  101  kubectl get pods -n team-a
+  102  kubectl delete pods --all --now -n team-a
+  103  kubectl delete pods --all -f -n team-a
+  104  kubectl delete pods --all --force -n team-a
+  105  kubectl get pods -n team-a
+  106  calicoctl get namespaces
+  110  kubectl get ippools
+  111  kubectl get ippools -o wide
+  112  kubectl get namespaces
+  113  kubectl get nodes
+  114  kubectl describe node k8s-wv1-01
+  115  kubectl describe node k8s-wv1-02
+  116  calicoctl -h
+  117  calicoctl ipam show --show-blocks
+  119  calicoctl ipam -h
+  120  calicoctl ipam show
+  121  calicoctl ipam configure -h
+  122  calicoctl ipam check
+  123  calicoctl -h
+  125  calicoctl datastore -h
+  126  calicoctl ipam show --show-blocks
+  127  calicoctl get nodes -o wide
+  130  kubectl delete deployment nginx-deployment-58b5b45564-wpnf4 -n default
+  131  kubectl get deployments -n default
+  132  kubectl delete deployment nginx-deployment -n default
+  133  kubectl get deployments -n team-a
+  134  kubectl delete deployment nginx-deployment -n team-a
+  136  kubectl get pods -n calico-system
+  139  kubectl describe namespace team-a
+  142  kubectl get events -n team-a
+  143  kubectl describe pod my-app-pod -n team-a
+
+kubectl logs my-app-pod -n team-a
