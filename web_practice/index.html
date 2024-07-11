@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Create Kubernetes Pod</title>
+    <meta charset="UTF-8">
+    <title>Deploy Pods to Kubernetes</title>
 </head>
 <body>
-    <h1>Create Kubernetes Pod</h1>
-    <form action="/create_pod" method="post">
-        <label for="pod_name">Pod Name:</label>
-        <input type="text" id="pod_name" name="pod_name" required><br><br>
-        <label for="namespace">Namespace:</label>
-        <input type="text" id="namespace" name="namespace" required><br><br>
-        <button type="submit">Create Pod</button>
+    <h1>Deploy Pods</h1>
+    <form action="/deploy" method="POST">
+        <label for="pod_name">Select Pod to Deploy:</label>
+        <select name="pod_name" id="pod_name">
+            {% for pod_name in pod_names %}
+                <option value="{{ pod_name }}">{{ pod_name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button type="submit">Deploy</button>
     </form>
+    <div id="message"></div>
 </body>
 </html>
-input<!DOCTYPE html>
