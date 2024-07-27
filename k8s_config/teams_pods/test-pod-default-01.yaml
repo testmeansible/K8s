@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod
+  namespace: default  # You can change this to the namespace where you want to deploy the test pod
+spec:
+  containers:
+  - name: busybox
+    image: busybox:latest
+    command: ["sh", "-c", "sleep 3600"]  # Keeps the pod running for 1 hour
+    stdin: true
+    tty: true
