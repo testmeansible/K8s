@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod-default-01
+  namespace: default
+  labels:
+    app: nginx-default-01
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service-default-01
+  namespace: default
+spec:
+  selector:
+    app: nginx-default-01
+  type: LoadBalancer
+  loadBalancerIP: 172.17.102.11  # Specify the IP address here
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
