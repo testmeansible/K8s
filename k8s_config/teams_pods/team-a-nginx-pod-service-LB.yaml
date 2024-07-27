@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx-pod-team-a_01
+  name: nginx-pod-team-a-01
   namespace: team-a
   labels:
     app: nginx-team-a_01
@@ -15,7 +15,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-service-team-a_01
+  name: nginx-service-team-a-01
   namespace: team-a
 spec:
   selector:
