@@ -21,7 +21,7 @@ spec:
   selector:
     app: nginx-team-a-01
   type: LoadBalancer
-  loadBalancerIP: 172.17.101.11  # Specify the IP address here
+  loadBalancerIP: 172.17.102.11  # Specify the IP address here
   ports:
   - protocol: TCP
     port: 80
