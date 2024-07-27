@@ -1,0 +1,17 @@
+# team-b-nginx-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-app-pod-01
+  namespace: team-d  # Deployed in the team-a namespace
+  labels:
+    app: my-app  # Label for pod identification
+spec:
+  containers:
+  - name: my-app
+    image: nginx:latest
+    ports:
+    - containerPort: 80  # Exposes port 80 within the container
+#    securityContext: # Optional: SecurityContext for security-sensitive deployments
+#      runAsUser: 1000  # Example: Run the container as user ID 1000
+
