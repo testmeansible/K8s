@@ -34,3 +34,33 @@ metadata:
 spec:
   addresses:
   - 172.17.102.10-172.17.102.50
+
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: team-c-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 172.17.103.10-172.17.103.50
+
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: team-d-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 172.17.104.10-172.17.104.50
+
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: team-e-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 172.17.105.10-172.17.105.50

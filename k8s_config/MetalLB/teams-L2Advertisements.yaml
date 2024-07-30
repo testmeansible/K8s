@@ -26,3 +26,33 @@ metadata:
 spec:
   ipAddressPools:
   - team-b-pool
+
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: team-c-pool-advertisement
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - team-c-pool
+
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: team-d-pool-advertisement
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - team-d-pool
+
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: team-e-pool-advertisement
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - team-e-pool
