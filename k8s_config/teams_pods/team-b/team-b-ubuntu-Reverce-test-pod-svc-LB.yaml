@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu-Reverse-test-pod
+  namespace: team-b # Change this to your specific namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu-Reverse-test
+  template:
+    metadata:
+      labels:
+        app: ubuntu-Reverse-test
+    spec:
+      containers:
+      - name: ubuntu-container
+        image: ubuntu:latest
+        command: ["/bin/sh", "-c", "apt-get update && apt-get install -y curl iputils-ping && sleep 3600"]
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "200Mi"
+          limits:
+            cpu: "200m"
+            memory: "400Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ubuntu-Reverse-test-service
+  namespace: team-a # Change this to your specific namespace
+spec:
+  selector:
+    app: ubuntu-Reverse-test
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
+  loadBalancerIP: 172.17.102.12 # Assign a specific external IP
