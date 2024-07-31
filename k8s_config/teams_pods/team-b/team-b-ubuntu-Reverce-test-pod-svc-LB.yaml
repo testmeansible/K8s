@@ -1,17 +1,18 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ubuntu-Reverse-test-pod
+  name: ubuntu-reverse-test-pod
   namespace: team-b # Change this to your specific namespace
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ubuntu-Reverse-test
+      app: ubuntu-reverse-test
   template:
     metadata:
       labels:
-        app: ubuntu-Reverse-test
+        app: ubuntu-reverse-test
     spec:
       containers:
       - name: ubuntu-container
@@ -30,11 +31,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ubuntu-Reverse-test-service
+  name: ubuntu-reverse-test-service
   namespace: team-a # Change this to your specific namespace
 spec:
   selector:
-    app: ubuntu-Reverse-test
+    app: ubuntu-reverse-test
   ports:
   - protocol: TCP
     port: 80
