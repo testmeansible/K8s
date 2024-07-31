@@ -32,7 +32,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ubuntu-reverse-test-service
-  namespace: team-a # Change this to your specific namespace
+  namespace: team-b # Change this to your specific namespace
 spec:
   selector:
     app: ubuntu-reverse-test
