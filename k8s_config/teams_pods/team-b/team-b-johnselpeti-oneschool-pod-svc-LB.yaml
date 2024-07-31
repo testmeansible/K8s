@@ -2,24 +2,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: johnselpeti-oneschool-pod-team-b
+  name: johnselpeti-oneschool-pod-team-b-01
   namespace: team-b # Change this to your specific namespace
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: johnselpeti-oneschool-team-b
+      app: johnselpeti-oneschool-team-b-01
   template:
     metadata:
       labels:
-        app: johnselpeti-oneschool-team-b
+        app: johnselpeti-oneschool-team-b-01
     spec:
       containers:
-      - name: johnselpeti-oneschool-team-b-container
+      - name: johnselpeti-oneschool-team-b-container-01
         image: johnselpeti/oneschool:v1
         # command: ["/bin/sh", "-c", "apt-get update && apt-get install -y curl iputils-ping && sleep 3600"]
         ports:
-        - containerPort: 8002
+        - containerPort: 80
         resources:
           requests:
             cpu: "100m"
@@ -31,14 +31,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ujohnselpeti-oneschool-service-team-b
+  name: ujohnselpeti-oneschool-service-team-b-01
   namespace: team-b # Change this to your specific namespace
 spec:
   selector:
-    app: johnselpeti-oneschool-team-b
+    app: johnselpeti-oneschool-team-b-01
   ports:
   - protocol: TCP
-    port: 8002
-    targetPort: 8002
+    port: 80
+    targetPort: 80
   type: LoadBalancer
   loadBalancerIP: 172.17.102.15 # Assign a specific external IP
