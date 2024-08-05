@@ -23,4 +23,75 @@ metadata:
   labels:
     team: team-c
 
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-d
+  labels:
+    team: team-d
+    
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-e
+  labels:
+    team: team-e
 
+    ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-f
+  labels:
+    team: team-f
+    
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-g
+  labels:
+    team: team-g
+
+    ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-h
+  labels:
+    team: team-h
+    
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-i
+  labels:
+    team: team-i
+
+    ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-j
+  labels:
+    team: team-j
+    
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-k
+  labels:
+    team: team-k
+
+    ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-l
+  labels:
+    team: team-l
+    
