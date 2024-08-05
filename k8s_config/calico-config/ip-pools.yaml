@@ -68,7 +68,7 @@ spec:
   nodeSelector: all()
   # blockSize: 26
 
-  ---
+---
 apiVersion: projectcalico.org/v3
 kind: IPPool
 metadata:
@@ -82,7 +82,7 @@ spec:
   nodeSelector: all()
   # blockSize: 26
 
-  ---
+---
 apiVersion: projectcalico.org/v3
 kind: IPPool
 metadata:
@@ -96,7 +96,7 @@ spec:
   nodeSelector: all()
   # blockSize: 26
 
-  ---
+---
 apiVersion: projectcalico.org/v3
 kind: IPPool
 metadata:
@@ -110,7 +110,7 @@ spec:
   nodeSelector: all()
   # blockSize: 26
 
-  ---
+---
 apiVersion: projectcalico.org/v3
 kind: IPPool
 metadata:
@@ -124,7 +124,7 @@ spec:
   nodeSelector: all()
   # blockSize: 26
 
-  ---
+---
 apiVersion: projectcalico.org/v3
 kind: IPPool
 metadata:
@@ -138,7 +138,7 @@ spec:
   nodeSelector: all()
   # blockSize: 26
 
-  ---
+---
 apiVersion: projectcalico.org/v3
 kind: IPPool
 metadata:
@@ -152,7 +152,7 @@ spec:
   nodeSelector: all()
   # blockSize: 26
 
-  ---
+---
 apiVersion: projectcalico.org/v3
 kind: IPPool
 metadata:
