@@ -1,0 +1,7 @@
+apiVersion: projectcalico.org/v3
+kind: BGPPeer
+metadata:
+  name: mikrotik-peer
+spec:
+  peerIP: 192.168.3.10  # Mikrotik router's IP address
+  asNumber: 65535       # Mikrotik router's AS number

@@ -5,10 +5,10 @@ metadata:
   name: team-a-ip-pool
 spec:
   cidr: 172.16.1.0/24
-  ipipMode: CrossSubnet
+  ipipMode: Never
+  vxlanMode: Never
   natOutgoing: true
   nodeSelector: all()
-  natOutgoing: true
   disabled: false
   blockSize: 26
   
@@ -20,7 +20,9 @@ metadata:
 spec:
   cidr: 172.16.2.0/24
   ipipMode: Never
+  vxlanMode: Never
   natOutgoing: true
+  disableBGPExport: false
   nodeSelector: all()
   blockSize: 26
   
@@ -32,7 +34,9 @@ metadata:
 spec:
   cidr: 172.16.3.0/24
   ipipMode: Never
+  vxlanMode: Never
   natOutgoing: true
+  disableBGPExport: false
   nodeSelector: all()
   blockSize: 26
 
