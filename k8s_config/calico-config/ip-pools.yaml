@@ -10,7 +10,7 @@ spec:
   natOutgoing: true
   nodeSelector: all()
   disabled: false
-  blockSize: 26
+  # blockSize: 26
   
 ---
 apiVersion: projectcalico.org/v3
@@ -24,7 +24,7 @@ spec:
   natOutgoing: true
   disableBGPExport: false
   nodeSelector: all()
-  blockSize: 26
+  # blockSize: 26
   
 ---
 apiVersion: projectcalico.org/v3
@@ -38,5 +38,130 @@ spec:
   natOutgoing: true
   disableBGPExport: false
   nodeSelector: all()
-  blockSize: 26
+  # blockSize: 26
 
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-d-ip-pool
+spec:
+  cidr: 172.16.4.0/24
+  ipipMode: Never
+  vxlanMode: Never
+  natOutgoing: true
+  disableBGPExport: false
+  nodeSelector: all()
+  # blockSize: 26
+
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-e-ip-pool
+spec:
+  cidr: 172.16.5.0/24
+  ipipMode: Never
+  vxlanMode: Never
+  natOutgoing: true
+  disableBGPExport: false
+  nodeSelector: all()
+  # blockSize: 26
+
+  ---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-f-ip-pool
+spec:
+  cidr: 172.16.6.0/24
+  ipipMode: Never
+  vxlanMode: Never
+  natOutgoing: true
+  disableBGPExport: false
+  nodeSelector: all()
+  # blockSize: 26
+
+  ---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-g-ip-pool
+spec:
+  cidr: 172.16.7.0/24
+  ipipMode: Never
+  vxlanMode: Never
+  natOutgoing: true
+  disableBGPExport: false
+  nodeSelector: all()
+  # blockSize: 26
+
+  ---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-h-ip-pool
+spec:
+  cidr: 172.16.8.0/24
+  ipipMode: Never
+  vxlanMode: Never
+  natOutgoing: true
+  disableBGPExport: false
+  nodeSelector: all()
+  # blockSize: 26
+
+  ---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-i-ip-pool
+spec:
+  cidr: 172.16.9.0/24
+  ipipMode: Never
+  vxlanMode: Never
+  natOutgoing: true
+  disableBGPExport: false
+  nodeSelector: all()
+  # blockSize: 26
+
+  ---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-j-ip-pool
+spec:
+  cidr: 172.16.10.0/24
+  ipipMode: Never
+  vxlanMode: Never
+  natOutgoing: true
+  disableBGPExport: false
+  nodeSelector: all()
+  # blockSize: 26
+
+  ---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-k-ip-pool
+spec:
+  cidr: 172.16.11.0/24
+  ipipMode: Never
+  vxlanMode: Never
+  natOutgoing: true
+  disableBGPExport: false
+  nodeSelector: all()
+  # blockSize: 26
+
+  ---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-l-ip-pool
+spec:
+  cidr: 172.16.12.0/24
+  ipipMode: Never
+  vxlanMode: Never
+  natOutgoing: true
+  disableBGPExport: false
+  nodeSelector: all()
+  # blockSize: 26
