@@ -1,4 +1,5 @@
 # namespaces.yaml
+
 ---
 apiVersion: v1
 kind: Namespace
@@ -6,7 +7,7 @@ metadata:
   name: team-a
   labels:
     team: team-a
-    
+
 ---
 apiVersion: v1
 kind: Namespace
@@ -14,7 +15,7 @@ metadata:
   name: team-b
   labels:
     team: team-b
-    
+
 ---
 apiVersion: v1
 kind: Namespace
@@ -30,7 +31,7 @@ metadata:
   name: team-d
   labels:
     team: team-d
-    
+
 ---
 apiVersion: v1
 kind: Namespace
@@ -46,7 +47,7 @@ metadata:
   name: team-f
   labels:
     team: team-f
-    
+
 ---
 apiVersion: v1
 kind: Namespace
@@ -62,7 +63,7 @@ metadata:
   name: team-h
   labels:
     team: team-h
-    
+
 ---
 apiVersion: v1
 kind: Namespace
@@ -78,7 +79,7 @@ metadata:
   name: team-j
   labels:
     team: team-j
-    
+
 ---
 apiVersion: v1
 kind: Namespace
@@ -94,7 +95,7 @@ metadata:
   name: team-l
   labels:
     team: team-l
-    
+
 ---
 apiVersion: v1
 kind: Namespace
@@ -102,7 +103,7 @@ metadata:
   name: team-m
   labels:
     team: team-m
-    
+
 ---
 apiVersion: v1
 kind: Namespace
@@ -110,4 +111,3 @@ metadata:
   name: team-n
   labels:
     team: team-n
-    
