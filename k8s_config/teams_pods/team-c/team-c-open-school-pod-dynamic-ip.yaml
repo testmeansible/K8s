@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: open-school-static-ip-pod-team-c-01
+  namespace: team-c
+  # annotations:
+  #   cni.projectcalico.org/ipAddrs: '[ "172.16.3.11" ]'
+spec:
+  containers:
+  - name: open-school
+    image: johnselpeti/oneschool:v1
+
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: example-pod
+#   namespace: team-a
+# spec:
+#   containers:
+#   - name: example-container
+#     image: nginx:latest
