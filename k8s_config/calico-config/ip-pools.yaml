@@ -5,7 +5,7 @@ metadata:
   name: team-a-ip-pool
 spec:
   cidr: 172.16.1.0/24
-  ipipMode: Never
+  ipipMode: Always
   vxlanMode: Never
   natOutgoing: true
   nodeSelector: all()
@@ -19,7 +19,7 @@ metadata:
   name: team-b-ip-pool
 spec:
   cidr: 172.16.2.0/24
-  ipipMode: Never
+  ipipMode: Always
   vxlanMode: Never
   natOutgoing: true
   disableBGPExport: false
@@ -33,7 +33,7 @@ metadata:
   name: team-c-ip-pool
 spec:
   cidr: 172.16.3.0/24
-  ipipMode: Never
+  ipipMode: Always
   vxlanMode: Never
   natOutgoing: true
   disableBGPExport: false
@@ -47,7 +47,7 @@ metadata:
   name: team-d-ip-pool
 spec:
   cidr: 172.16.4.0/24
-  ipipMode: Never
+  ipipMode: Always
   vxlanMode: Never
   natOutgoing: true
   disableBGPExport: false
@@ -61,7 +61,7 @@ metadata:
   name: team-e-ip-pool
 spec:
   cidr: 172.16.5.0/24
-  ipipMode: Never
+  ipipMode: Always
   vxlanMode: Never
   natOutgoing: true
   disableBGPExport: false
