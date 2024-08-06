@@ -23,7 +23,7 @@ metadata:
     cni.projectcalico.org/ipv4pools: '["team-c-ip-pool"]'
 
 ---
-# team-c-namespace-annotation.yaml
+# team-d-namespace-annotation.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -32,7 +32,80 @@ metadata:
     cni.projectcalico.org/ipv4pools: '["team-d-ip-pool"]'
 
 ---
-# team-c-namespace-annotation.yaml
+# team-e-namespace-annotation.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-e
+  annotations:
+    cni.projectcalico.org/ipv4pools: '["team-e-ip-pool"]'
+
+---
+# team-f-namespace-annotation.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-f
+  annotations:
+    cni.projectcalico.org/ipv4pools: '["team-f-ip-pool"]'
+
+---
+# team-g-namespace-annotation.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-g
+  annotations:
+    cni.projectcalico.org/ipv4pools: '["team-g-ip-pool"]'
+
+---
+# team-h-namespace-annotation.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-h
+  annotations:
+    cni.projectcalico.org/ipv4pools: '["team-h-ip-pool"]'
+
+---
+# team-i-namespace-annotation.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-i
+  annotations:
+    cni.projectcalico.org/ipv4pools: '["team-i-ip-pool"]'
+
+---
+# team-j-namespace-annotation.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-j
+  annotations:
+    cni.projectcalico.org/ipv4pools: '["team-j-ip-pool"]'
+
+---
+# team-k-namespace-annotation.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-k
+  annotations:
+    cni.projectcalico.org/ipv4pools: '["team-k-ip-pool"]'
+
+
+---
+# team-l-namespace-annotation.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-l
+  annotations:
+    cni.projectcalico.org/ipv4pools: '["team-l-ip-pool"]'
+
+---
+# team-m-namespace-annotation.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -41,7 +114,7 @@ metadata:
     cni.projectcalico.org/ipv4pools: '["team-m-ip-pool"]'
 
 ---
-# team-c-namespace-annotation.yaml
+# team-n-namespace-annotation.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
