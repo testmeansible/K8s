@@ -39,7 +39,7 @@ metadata:
   labels:
     team: team-e
 
-    ---
+---
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -55,7 +55,7 @@ metadata:
   labels:
     team: team-g
 
-    ---
+---
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -71,7 +71,7 @@ metadata:
   labels:
     team: team-i
 
-    ---
+---
 apiVersion: v1
 kind: Namespace
 metadata:
