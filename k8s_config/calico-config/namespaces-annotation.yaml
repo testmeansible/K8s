@@ -22,3 +22,20 @@ metadata:
   annotations:
     cni.projectcalico.org/ipv4pools: '["team-c-ip-pool"]'
 
+---
+# team-c-namespace-annotation.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-m
+  annotations:
+    cni.projectcalico.org/ipv4pools: '["team-m-ip-pool"]'
+
+---
+# team-c-namespace-annotation.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-n
+  annotations:
+    cni.projectcalico.org/ipv4pools: '["team-n-ip-pool"]'

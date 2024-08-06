@@ -87,11 +87,27 @@ metadata:
   labels:
     team: team-k
 
-    ---
+---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: team-l
   labels:
     team: team-l
+    
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-m
+  labels:
+    team: team-m
+    
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-n
+  labels:
+    team: team-n
     
