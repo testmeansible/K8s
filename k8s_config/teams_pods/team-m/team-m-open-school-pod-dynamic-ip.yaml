@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: open-school-dynamic-ip-pod-team-m-01
+  namespace: team-m
+  # annotations:
+  #   cni.projectcalico.org/ipAddrs: '[ "172.16.13.11" ]'
+spec:
+  containers:
+  - name: open-school
+    image: johnselpeti/oneschool:v1
