@@ -5,4 +5,4 @@ metadata:
 spec:
   logSeverityScreen: Info
   nodeToNodeMeshEnabled: true
-  asNumber: 64512  # Replace with your desired AS number
+  asNumber: 64513  # Replace with your desired AS number
