@@ -4,4 +4,4 @@ metadata:
   name: mikrotik-peer
 spec:
   peerIP: 192.168.3.1   # Mikrotik router's IP address
-  asNumber: 65535       # Mikrotik router's AS number
+  asNumber: 65123       # Mikrotik router's AS number
