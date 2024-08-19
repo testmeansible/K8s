@@ -1,0 +1,55 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Container and Sections */
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+  .section, .dashboard {
+    flex: 1 0 300px; /* Initial width */
+    margin: 10px;
+    border: 1px solid #ccc;
+    padding: 20px;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+  
+    .section, .dashboard {
+      flex: 1 0 auto; /* Adjust flex-basis for smaller screens */
+    }
+  }
+  
+  /* Button Styles */
+  .buttons button {
+    margin-right: 10px;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Summary Styles */
+  .summary {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  /* Header Styles */
+  h2, h3 {
+    margin: 0;
+  }
+  

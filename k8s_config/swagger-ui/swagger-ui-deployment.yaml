@@ -1,0 +1,33 @@
+# Not yet finalized need some work
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: swagger-ui
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: swagger-ui
+  template:
+    metadata:
+      labels:
+        app: swagger-ui
+    spec:
+      containers:
+        - name: swagger-ui
+          image: swaggerapi/swagger-ui
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SWAGGER_JSON
+              value: /swagger.json  # Path to your OpenAPI spec
+          volumeMounts:
+            - name: swagger-volume
+              mountPath: /swagger.json
+              subPath: swagger.json
+      volumes:
+        - name: swagger-volume
+          configMap:
+            name: swagger-config
