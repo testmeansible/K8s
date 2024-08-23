@@ -1,0 +1,216 @@
+# master-ip-pools.yaml
+
+# master ip pool for LHR
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: master-lhr-ip-pool
+  labels:
+    location: zone-lhr
+    status: available 
+spec:
+  cidr: 172.20.0.0/16
+  ipipMode: Always
+  vxlanMode: Never
+  natOutgoing: true
+  disableBGPExport: false
+  nodeSelector: all()
+  # disabled: false
+  blockSize: 26
+
+# master ip pool for KHI
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: master-khi-ip-pool
+  labels:
+    location: zone-khi
+    status: available 
+spec:
+  cidr: 172.21.0.0/16
+  ipipMode: Always
+  vxlanMode: Never
+  natOutgoing: true
+  disableBGPExport: false
+  nodeSelector: all()
+  blockSize: 26
+
+# master ip pool for MUL
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: master-mul-ip-pool
+  labels:
+    location: zone-mul
+    status: available 
+spec:
+  cidr: 172.22.0.0/16
+  ipipMode: Always
+  vxlanMode: Never
+  natOutgoing: true
+  disableBGPExport: false
+  nodeSelector: all()
+  blockSize: 26
+
+# master ip pool for QUT
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: master-qut-ip-pool
+  labels:
+    location: zone-qut
+    status: available 
+spec:
+  cidr: 172.23.0.0/16
+  ipipMode: Always
+  vxlanMode: Never
+  natOutgoing: true
+  disableBGPExport: false
+  nodeSelector: all()
+  blockSize: 26
+
+
+# master ip pool for PWR
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: master-pwr-ip-pool
+spec:
+  cidr: 172.24.0.0/16
+  ipipMode: Always
+  vxlanMode: Never
+  natOutgoing: true
+  disableBGPExport: false
+  nodeSelector: all()
+  blockSize: 26
+
+# ---
+# apiVersion: projectcalico.org/v3
+# kind: IPPool
+# metadata:
+#   name: team-f-ip-pool
+# spec:
+#   cidr: 172.16.6.0/24
+#   ipipMode: Never
+#   vxlanMode: Never
+#   natOutgoing: true
+#   disableBGPExport: false
+#   nodeSelector: all()
+#   blockSize: 26
+
+# ---
+# apiVersion: projectcalico.org/v3
+# kind: IPPool
+# metadata:
+#   name: team-g-ip-pool
+# spec:
+#   cidr: 172.16.7.0/24
+#   ipipMode: Never
+#   vxlanMode: Never
+#   natOutgoing: true
+#   disableBGPExport: false
+#   nodeSelector: all()
+#   blockSize: 26
+
+# ---
+# apiVersion: projectcalico.org/v3
+# kind: IPPool
+# metadata:
+#   name: team-h-ip-pool
+# spec:
+#   cidr: 172.16.8.0/24
+#   ipipMode: Never
+#   vxlanMode: Never
+#   natOutgoing: true
+#   disableBGPExport: false
+#   nodeSelector: all()
+#   blockSize: 26
+
+# ---
+# apiVersion: projectcalico.org/v3
+# kind: IPPool
+# metadata:
+#   name: team-i-ip-pool
+# spec:
+#   cidr: 172.16.9.0/24
+#   ipipMode: Never
+#   vxlanMode: Never
+#   natOutgoing: true
+#   disableBGPExport: false
+#   nodeSelector: all()
+#   blockSize: 26
+
+# ---
+# apiVersion: projectcalico.org/v3
+# kind: IPPool
+# metadata:
+#   name: team-j-ip-pool
+# spec:
+#   cidr: 172.16.10.0/24
+#   ipipMode: Never
+#   vxlanMode: Never
+#   natOutgoing: true
+#   disableBGPExport: false
+#   nodeSelector: all()
+#   blockSize: 26
+
+# ---
+# apiVersion: projectcalico.org/v3
+# kind: IPPool
+# metadata:
+#   name: team-k-ip-pool
+# spec:
+#   cidr: 172.16.11.0/24
+#   ipipMode: Never
+#   vxlanMode: Never
+#   natOutgoing: true
+#   disableBGPExport: false
+#   nodeSelector: all()
+#   blockSize: 26
+
+# ---
+# apiVersion: projectcalico.org/v3
+# kind: IPPool
+# metadata:
+#   name: team-l-ip-pool
+# spec:
+#   cidr: 172.16.12.0/24
+#   ipipMode: Never
+#   vxlanMode: Never
+#   natOutgoing: true
+#   disableBGPExport: false
+#   nodeSelector: all()
+#   blockSize: 26
+
+# ---
+# apiVersion: projectcalico.org/v3
+# kind: IPPool
+# metadata:
+#   name: team-m-ip-pool
+# spec:
+#   cidr: 172.16.13.0/24
+#   ipipMode: Never
+#   vxlanMode: Never
+#   natOutgoing: true
+#   disableBGPExport: false
+#   nodeSelector: all()
+#   blockSize: 26
+
+# ---
+# apiVersion: projectcalico.org/v3
+# kind: IPPool
+# metadata:
+#   name: team-n-ip-pool
+# spec:
+#   cidr: 172.16.14.0/24
+#   ipipMode: Never
+#   vxlanMode: Never
+#   natOutgoing: true
+#   disableBGPExport: false
+#   nodeSelector: all()
+#   blockSize: 26
