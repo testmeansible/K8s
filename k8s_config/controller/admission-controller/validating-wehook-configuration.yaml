@@ -4,17 +4,17 @@ kind: ValidatingWebhookConfiguration
 metadata:
   name: admission-controller-webhook
 webhooks:
-  - name: admission-controller.kube-system.svc
+  - name: admission.controller.svc.com
     clientConfig:
       service:
-        name: admission-controller
-        namespace: kube-system
-        path: "/admission"
+        name: admission-controller-service
+        namespace: default
+        path: "/validate"
       caBundle: <ca-bundel>
     rules:
       - operations: ["CREATE", "UPDATE"]
-        apiGroups: [""]
-        apiVersions: ["v1"]
-        resources: ["namespaces"]
+        apiGroups: ["*"]
+        apiVersions: ["*"]
+        resources: ["*"]
     admissionReviewVersions: ["v1"]
     sideEffects: None

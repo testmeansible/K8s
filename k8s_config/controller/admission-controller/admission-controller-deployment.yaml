@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: admission-controller
-  namespace: kube-system
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -16,7 +16,15 @@ spec:
     spec:
       containers:
         - name: admission-controller
-          image: <your-registry>/admission-controller:latest
+          image: learningdevops05/admission-controller:latest
           ports:
             - containerPort: 443
+        volumeMounts:
+        - name: certs
+          mountPath: "/etc/webhook/certs"
+          readOnly: true
+      volumes:
+      - name: certs
+        secret:
+          secretName: admission-controller-tls
           # Add any necessary environment variables or volume mounts
