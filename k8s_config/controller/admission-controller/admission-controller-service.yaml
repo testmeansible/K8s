@@ -1,0 +1,13 @@
+# admission-controller-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: admission-controller
+  namespace: kube-system
+spec:
+  ports:
+    - port: 443
+      targetPort: 443
+  selector:
+    app: admission-controller
+  type: ClusterIP
