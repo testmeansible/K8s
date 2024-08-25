@@ -17,7 +17,7 @@ spec:
       serviceAccountName: admission-controller-sa
       containers:
         - name: admission-controller
-          image: learningdevops05/admission-controller:latest
+          image: learningdevops05/admission-controller:v1.1
           ports:
             - containerPort: 443
           volumeMounts:
