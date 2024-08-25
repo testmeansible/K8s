@@ -13,8 +13,8 @@ webhooks:
       caBundle: <ca-bundel>
     rules:
       - operations: ["CREATE", "UPDATE"]
-        apiGroups: ["*"]
+        apiGroups: [""]
         apiVersions: ["*"]
-        resources: ["*"]
+        resources: ["namespaces"]
     admissionReviewVersions: ["v1"]
     sideEffects: None
