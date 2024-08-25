@@ -10,3 +10,6 @@ rules:
 - apiGroups: [""]
   resources: ["secrets"]
   verbs: ["get", "list", "watch"]
+- apiGroups: ["crd.projectcalico.org"]
+  resources: ["ippools"]
+  verbs: ["list", "get", "watch", "patch"]
