@@ -12,7 +12,7 @@ webhooks:
         path: "/mutate"
       caBundle: <ca-bundel>
     rules:
-      - operations: ["CREATE", "UPDATE"]
+      - operations: ["CREATE", "UPDATE", "DELETE"]
         apiGroups: [""]
         apiVersions: ["*"]
         resources: ["namespaces"]
