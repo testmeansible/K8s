@@ -4,10 +4,10 @@ metadata:
   name: prometheus-pv-1
 spec:
   capacity:
-	  storage: 10Gi
+    storage: 10Gi
   accessModes:
-	  - ReadWriteOnce
+    - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   vsphereVolume:
     volumePath: "[datastore1] pv01.vmdk"
-	    fsType: ext4
+    fsType: ext4
