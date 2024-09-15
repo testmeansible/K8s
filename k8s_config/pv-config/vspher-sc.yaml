@@ -1,6 +1,17 @@
+# apiVersion: storage.k8s.io/v1
+# kind: StorageClass
+# metadata:
+#   name: vsphere-csi
+# provisioner: csi.vsphere.vmware.com
+# volumeBindingMode: Immediate
+
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: vsphere-csi
+  name: vsphere-storage-class
 provisioner: csi.vsphere.vmware.com
+parameters:
+  datastore: "datastore1"
+  # storagepolicyname: "your-storage-policy"   # Optional
+reclaimPolicy: Retain
 volumeBindingMode: Immediate
