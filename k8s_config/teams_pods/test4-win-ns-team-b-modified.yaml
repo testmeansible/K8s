@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: windows-pvc-80-server-2022-01
+  namespace: team-b  # Change to the appropriate namespace
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 80Gi
+  storageClassName: thin-disk
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: windows-pvc-1-server-2022-02
+  namespace: team-b  # Change to the appropriate namespace
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: thin-disk
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: windows-deployment-mod
+  namespace: team-b  # Specify the new namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: windows-app-mod
+  template:
+    metadata:
+      labels:
+        app: windows-app-mod
+    spec:
+      containers:
+        - name: windows-container
+          image: learningdevops05/kvm-win-server-2022:v4
+          volumeMounts:
+            - mountPath: /storage
+              name: windows-storage-mod
+            - mountPath: /oem
+              name: windows-oem-mod
+            - mountPath: /dev/kvm
+              name: dev-kvm-mod
+          command: ["sh", "-c", "cp -r /mnt/storage/* /storage/ && /usr/bin/tini -s /run/entry.sh"]
+          securityContext:  # Add security context here
+            privileged: true
+      volumes:
+        - name: windows-storage-mod
+          persistentVolumeClaim:
+            claimName: windows-pvc-80-server-2022-01  # Ensure the PVC exists in the new namespace
+        - name: windows-oem-mod
+          persistentVolumeClaim:
+            claimName: windows-pvc-1-server-2022-02  # Ensure the PVC exists in the new namespace
+        - name: dev-kvm-mod
+          hostPath:
+            path: /dev/kvm
