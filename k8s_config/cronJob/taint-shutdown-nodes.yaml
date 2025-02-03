@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: taint-shutdown-nodes
+  namespace: kube-system
+spec:
+  schedule: "*/1 * * * *"  # Runs every minute
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: node-health-check-sa  # Use the existing ServiceAccount
+          restartPolicy: OnFailure
+          nodeSelector:
+            node-role.kubernetes.io/worker: "worker"  # Run only on worker nodes
+          containers:
+          - name: taint-nodes
+            image: bitnami/kubectl:latest
+            command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Checking for NotReady nodes..."
+              FAILED_NODES=$(kubectl get nodes --no-headers | awk '$2 == "NotReady" {print $1}')
+
+              if [ -n "$FAILED_NODES" ]; then
+                echo "Tainting nodes: $FAILED_NODES"
+                for NODE in $FAILED_NODES; do
+                  kubectl taint nodes $NODE node.kubernetes.io/out-of-service=nodeshutdown:NoExecute --overwrite
+                done
+              else
+                echo "No NotReady nodes detected."
+              fi

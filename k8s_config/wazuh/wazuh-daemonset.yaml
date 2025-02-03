@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: wazuh-agent
+  namespace: default
+  labels:
+    app: wazuh-agent
+spec:
+  selector:
+    matchLabels:
+      app: wazuh-agent
+  template:
+    metadata:
+      labels:
+        app: wazuh-agent
+    spec:
+      containers:
+        - name: wazuh-agent
+          image: wazuh/wazuh-agent:latest
+          env:
+            - name: MANAGER_IP
+              value: "192.168.3.159"  # Replace with your Wazuh Manager IP
+            - name: WAZUH_AGENT_GROUP
+              value: "k8s-cluster-agents"  # Optional, specify an agent group
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: varlog
+              mountPath: /var/log
+            - name: containerd
+              mountPath: /var/lib/containerd
+            - name: kubepods
+              mountPath: /var/log/pods
+            - name: kubeconfigs
+              mountPath: /etc/kubernetes
+      volumes:
+        - name: varlog
+          hostPath:
+            path: /var/log
+        - name: containerd
+          hostPath:
+            path: /var/lib/containerd
+        - name: kubepods
+          hostPath:
+            path: /var/log/pods
+        - name: kubeconfigs
+          hostPath:
+            path: /etc/kubernetes

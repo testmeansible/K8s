@@ -1,0 +1,70 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: node-health-taint-check
+  namespace: kube-system
+spec:
+  schedule: "*/1 * * * *"  # Runs every minute
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: node-health-check-sa  # Use the service account
+          restartPolicy: OnFailure
+          nodeSelector:
+            node-role.kubernetes.io/worker: "worker"  # Ensure it runs only on worker nodes
+          containers:
+          - name: node-health-taint-check
+            image: bitnami/kubectl:latest
+            command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Fetching namespaces with label team=ctf..."
+              MONITORED_NAMESPACES=$(kubectl get namespaces -l team=ctf --no-headers | awk '{print $1}' | tr '\n' ' ')
+              
+              if [ -n "$MONITORED_NAMESPACES" ]; then
+                echo "Updating ConfigMap with monitored namespaces: $MONITORED_NAMESPACES"
+                kubectl patch configmap node-health-check-config -n kube-system --type merge -p "{\"data\":{\"monitored_namespaces\":\"$MONITORED_NAMESPACES\"}}"
+              else
+                echo "No namespaces found with label team=ctf."
+              fi
+
+              echo "Checking for failed nodes..."
+              FAILED_NODES=$(kubectl get nodes --no-headers | awk '$2 == "NotReady" {print $1}')
+
+              if [ -n "$FAILED_NODES" ]; then
+                echo "Failed nodes detected: $FAILED_NODES"
+
+                for NODE in $FAILED_NODES; do
+                  echo "Applying taint to $NODE..."
+                  kubectl taint nodes $NODE node.kubernetes.io/out-of-service=nodeshutdown:NoExecute --overwrite
+
+                  echo "Finding affected Deployments and PVCs in monitored namespaces..."
+                  
+                  MONITORED_NAMESPACES=$(kubectl get configmap node-health-check-config -n kube-system -o jsonpath="{.data.monitored_namespaces}")
+
+                  for NS in $MONITORED_NAMESPACES; do
+                    echo "Checking namespace: $NS"
+
+                    # Find Deployments where at least one Pod was on the failed node
+                    DEPLOYMENTS=$(kubectl get pods -n $NS --field-selector spec.nodeName=$NODE --no-headers | awk '{print $1}' | xargs -I {} kubectl get deployment -n $NS --field-selector metadata.name={})
+
+                    for DEPLOYMENT in $DEPLOYMENTS; do
+                      if [ -n "$DEPLOYMENT" ]; then
+                        echo "Deleting Deployment $DEPLOYMENT in namespace $NS..."
+                        kubectl delete deployment $DEPLOYMENT -n $NS --force --grace-period=0
+                      fi
+                    done
+                    
+                    # Find and delete PVCs associated with the failed node
+                    PVC_LIST=$(kubectl get pvc -n $NS --no-headers | awk '{print $1}')
+                    for PVC in $PVC_LIST; do
+                      echo "Deleting PVC $PVC in namespace $NS..."
+                      kubectl delete pvc $PVC -n $NS --force --grace-period=0
+                    done
+                  done
+                done
+              else
+                echo "All nodes are healthy."
+              fi

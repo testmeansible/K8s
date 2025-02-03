@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: node-health-check-logs
+  namespace: kube-system
+data:
+  logs: "Node health check logs:"

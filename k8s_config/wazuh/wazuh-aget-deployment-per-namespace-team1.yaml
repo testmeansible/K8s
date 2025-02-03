@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wazuh-agent
+  namespace: team1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wazuh-agent
+  template:
+    metadata:
+      labels:
+        app: wazuh-agent
+    spec:
+      containers:
+      - name: wazuh-agent
+        image: wazuh/wazuh-agent:latest
+        env:
+        - name: WAZUH_MANAGER
+          value: "192.168.3.159"  # Replace with your Wazuh Manager IP
+        - name: WAZUH_AGENT_GROUP
+          value: "team1-group"  # Assign a unique group for namespace
+        - name: WAZUH_AGENT_NAME
+          value: "agent-team1"  # Unique name for the agent
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        - name: containerdlogs
+          mountPath: /var/lib/containerd
+      volumes:
+      - name: varlog
+        hostPath:
+          path: /var/log
+      - name: containerdlogs
+        hostPath:
+          path: /var/lib/containerd

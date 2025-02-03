@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: windows-pvc-78-server-2022-01
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 78Gi
+  storageClassName: thin-disk
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: windows-pvc-1-server-2022-02
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: thin-disk
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: windows-deployment-mod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: windows-app-mod
+  template:
+    metadata:
+      labels:
+        app: windows-app-mod
+    spec:
+      initContainers:
+      - name: data-copier
+        image: learningdevops05/kvm-win-11-sql-script:v1
+        command: ["sh", "-c", "cp -r /mnt/storage/* /storage"]
+        volumeMounts:
+        - name: windows-storage-mod
+          mountPath: /storage
+      containers:
+      - name: windows-container
+        image: learningdevops05/kvm-win-11-sql-script:v1
+        volumeMounts:
+        - mountPath: /storage
+          name: windows-storage-mod
+        - mountPath: /oem
+          name: windows-oem-mod
+          # readOnly: true  # Restricts /dev/kvm access to read-only
+        - mountPath: /dev/kvm
+          name: dev-kvm-mod
+          readOnly: true  # Restricts /dev/kvm access to read-only
+        command: [sh, "-c", '/usr/bin/tini -s /run/entry.sh; sleep 10 ; rm -rf /oem/*']
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+          fsGroup: 1000
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+          # privileged: true
+        resources:
+          requests:
+            cpu: "2"
+            memory: "4Gi"
+          limits:
+            cpu: "2"
+            memory: "5Gi"
+      volumes:
+      - name: windows-storage-mod
+        persistentVolumeClaim:
+          claimName: windows-pvc-78-server-2022-01
+      - name: windows-oem-mod
+        persistentVolumeClaim:
+          claimName: windows-pvc-1-server-2022-02
+      - name: dev-kvm-mod
+        hostPath:
+          path: /dev/kvm
+          type: File

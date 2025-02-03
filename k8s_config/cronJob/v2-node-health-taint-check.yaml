@@ -1,0 +1,70 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: node-health-taint-check
+  namespace: kube-system
+spec:
+  schedule: "*/1 * * * *"  # Runs every minute
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: node-health-check-sa  # Ensure correct permissions
+          restartPolicy: OnFailure
+          nodeSelector:
+            node-role.kubernetes.io/worker: "worker"  # Run only on worker nodes
+          containers:
+          - name: node-health-taint-check
+            image: bitnami/kubectl:latest
+            command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Fetching NotReady nodes..." | tee -a /logs/output.log
+              FAILED_NODES=$(kubectl get nodes --no-headers | awk '$2 == "NotReady" {print $1}')
+              
+              if [ -n "$FAILED_NODES" ]; then
+                echo "Tainting nodes: $FAILED_NODES" | tee -a /logs/output.log
+                for NODE in $FAILED_NODES; do
+                  kubectl taint nodes $NODE node.kubernetes.io/out-of-service=nodeshutdown:NoExecute --overwrite
+                done
+
+                echo "Fetching namespaces with label team=ctf..." | tee -a /logs/output.log
+                MONITORED_NAMESPACES=$(kubectl get namespaces -l team=ctf --no-headers | awk '{print $1}')
+                for NS in $MONITORED_NAMESPACES; do
+                  echo "Checking namespace: $NS" | tee -a /logs/output.log
+                  
+                  # Get Deployments from Pods using labels
+                  DEPLOYMENTS=$(kubectl get pods -n $NS --field-selector spec.nodeName=$NODE --no-headers -o custom-columns=":metadata.labels.app" | sort -u)
+                  for DEPLOYMENT in $DEPLOYMENTS; do
+                    echo "Deleting Deployment $DEPLOYMENT in namespace $NS..." | tee -a /logs/output.log
+                    kubectl delete deployment $DEPLOYMENT -n $NS --force --grace-period=0
+                  done
+                  
+                  # Delete PVCs bound to the tainted node
+                  PVC_LIST=$(kubectl get pvc -n $NS --no-headers -o jsonpath="{.items[*].metadata.name}" | tr ' ' '\n')
+                  for PVC in $PVC_LIST; do
+                    PV_NAME=$(kubectl get pvc $PVC -n $NS -o jsonpath="{.spec.volumeName}")
+                    PV_NODE=$(kubectl get pv $PV_NAME -o jsonpath="{.spec.nodeAffinity.required.nodeSelectorTerms[0].matchExpressions[0].values[0]}" 2>/dev/null || echo "")
+                    
+                    if [ "$PV_NODE" == "$NODE" ]; then
+                      echo "Deleting PVC $PVC in namespace $NS (Bound to node: $NODE)" | tee -a /logs/output.log
+                      kubectl delete pvc $PVC -n $NS --force --grace-period=0
+                    fi
+                  done
+                done
+              else
+                echo "No NotReady nodes detected." | tee -a /logs/output.log
+              fi
+
+              # Store logs in ConfigMap for auditing
+              kubectl patch configmap node-health-check-config -n kube-system --type merge -p "{\"data\":{\"logs\":\"$(date) - Node Health Check Log: $(cat /logs/output.log | tr '\n' ' ' | base64)\"}}"
+
+            volumeMounts:
+            - name: logs-volume
+              mountPath: /logs
+          volumes:
+          - name: logs-volume
+            emptyDir: {}

@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: filebeat-config
+  namespace: logging
+data:
+  filebeat.yml: |
+    filebeat.autodiscover:
+      providers:
+        - type: kubernetes
+          node: ${NODE_NAME}
+          templates:
+            - condition:
+                equals:
+                  kubernetes.namespace: "*"
+              config:
+                - type: container
+                  paths:
+                    - /var/log/pods/*/*.log
+                  processors:
+                    - add_kubernetes_metadata:
+                        host: ${NODE_NAME}
+                    - add_fields:
+                        target: ""
+                        fields:
+                          namespace: "${data.kubernetes.namespace}"
+                          pod_name: "${data.kubernetes.pod.name}"
+                          container_name: "${data.kubernetes.container.name}"
+
+    output.syslog:
+      hosts: ["192.168.3.159:514"]  # Wazuh Manager IP and syslog port
+      protocol: "udp"               # Use "udp" or "tcp" depending on your setup
+      format: "rfc3164"             # Compatible with Wazuh syslog format
+      facility: "user"              # Facility to use for syslog
