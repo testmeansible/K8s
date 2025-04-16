@@ -1,0 +1,15 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: vsphere-local-datastore
+provisioner: csi.vsphere.vmware.com
+reclaimPolicy: Delete  # ✅ Volumes are automatically deleted when the PVC is deleted
+volumeBindingMode: WaitForFirstConsumer  # ✅ Ensures volume is only created when a pod is scheduled
+parameters:
+  csi.storage.k8s.io/topology-aware: "true"
+allowedTopologies:
+  - matchLabelExpressions:
+      - key: topology.csi.vmware.com/datastore
+        values:
+          - DataStore2-252
+          - DataStore2-253

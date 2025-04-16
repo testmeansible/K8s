@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zabbix-pod
+  labels:
+    app: zabbix
+spec:
+  containers:
+    - name: zabbix-container
+      image: abeerfatima/zabbixx:zabi
+      ports:
+        - containerPort: 80   # Change this if your Zabbix server runs on a different port
+        - containerPort: 10051 # Default Zabbix trapper port
+      resources:
+        limits:
+          memory: "512Mi"
+          cpu: "500m"
+        requests:
+          memory: "256Mi"
+          cpu: "250m"
+      

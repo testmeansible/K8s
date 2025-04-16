@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: windows10-deployment
+  # namespace: it
+spec:
+  replicas: 1  # Adjust based on your worker node count
+  selector:
+    matchLabels:
+      app: win10-b
+  template:
+    metadata:
+      labels:
+        app: win10-b
+    spec:
+      terminationGracePeriodSeconds: 5
+      restartPolicy: Always  # Explicitly define restart behavior
+      containers:
+      - name: win10-b
+        image: 192.168.3.46:5000/windows10:v2
+        volumeMounts:
+          - mountPath: /dev/kvm  # Correctly mount KVM device
+            name: dev-kvm-mod
+        securityContext: # Add security context here
+            privileged: true
+      volumes:
+        - name: dev-kvm-mod
+          hostPath:
+            path: /dev/kvm

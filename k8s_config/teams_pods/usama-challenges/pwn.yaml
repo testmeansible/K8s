@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pwn-challenge-deployment
+  labels:
+    app: pwn-challenge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pwn-challenge
+  template:
+    metadata:
+      labels:
+        app: pwn-challenge
+    spec:
+      containers:
+      - name: pwn-challenge
+        image: mrstucknet/pwn_challenge:v1
+        ports:
+        - containerPort: 9999  # Make sure to use the correct port for your app

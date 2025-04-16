@@ -1,0 +1,19 @@
+# singel-master-ip-pools.yaml
+
+# master ip pool 
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: master-ip-pool-10.10
+  labels:
+    status: available 
+spec:
+  cidr: 10.10.101.0/16
+  ipipMode: Always
+  vxlanMode: Never
+  natOutgoing: true
+  disableBGPExport: false
+  nodeSelector: all()
+  # disabled: false
+  blockSize: 26

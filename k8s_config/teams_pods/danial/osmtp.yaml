@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: osmtpd
+spec:
+  containers:
+  - name: osmtpd
+    image: deadhell111/smt:vv1

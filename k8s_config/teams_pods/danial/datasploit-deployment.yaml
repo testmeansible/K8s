@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datasploit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: datasploit
+  template:
+    metadata:
+      labels:
+        app: datasploit
+    spec:
+      containers:
+      - name: datasploit-container
+        image: circuitx/phpmyadmin-ctf
+        ports:
+        - containerPort: 80
+        securityContext:
+          allowPrivilegeEscalation: false
+        command: ["/bin/bash", "-c"]
+        args:
+          - service apache2 start && service mysql start && tail -f /dev/null

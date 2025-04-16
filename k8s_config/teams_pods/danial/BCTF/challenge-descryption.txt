@@ -1,0 +1,86 @@
+-------------------------
+
+Challenge1 Name: APT DNS Logs
+Easy:
+Forensics:
+
+Description:
+Our security team has detected unusual network activity, and we suspect that the notorious PatchW APT group is targeting our infrastructure. We have captured a DNS log file from one of our internal resolvers. Analyze the logs and identify any suspicious domains that could be linked to PatchW APT.
+
+1: Provide the domain name with timestap   50
+
+------------------------
+Challenge2 Name: Silent Execution 
+Easy:
+Forensics:
+
+Description:
+A system in our network exhibited suspicious execution behavior, and forensic logs were captured for further investigation. Threat intelligence suggests that this activity may be linked to the PatchW APT group, Identify the custom backdoor ran by APT uncover the malicious activity and retrieve the flag?
+
+1:Provide the activity timestamp, user, ip, and processname  50
+
+FORMAT:timestamp user IP Processname
+
+------------------------
+
+Challenge3 Name: Silent Execution – Second Trace
+Easy:
+Forensics:
+
+Description:
+Further investigation into our security incident has uncovered another set of execution logs linked to potential  APT activity. This second trace suggests that the attackers, possibly attempting stealer on the compromised system.
+
+Find the stealer executed: 50
+
+FORMAT:2025-02-01 21:53:32 anthony72 92.206.209.52 process_start computer.lnk
+
+------------------------
+
+Challenge4 Name: Enciphered intrusion
+Medium:
+Forensics:
+
+Description:
+As the investigation deepens, a third execution log has surfaced, indicating that the APT group is making its final attempts to establish persistence or exfiltrate data. They have encrypted the logs on server. Your task is to decrypt the logs and find decryption key and then find stealer.
+
+hint: i like root
+1: What encryption is being used:    25
+2: Provide the stealer name that is being used by APT  50
+
+-------------------------
+
+Challenge5 Name: SQL Phantom
+Medium
+Forensics:
+
+Description:
+
+An attacker has exploited a vulnerability in the system and managed to tamper with the SQL database entries. They have altered critical user records and stealthily added their multiple accounts with elevated privileges. 
+
+1: Provide the usernames that is being added by attacker.   25
+2: Flag:[user1user2user3]     50
+
+-------------------------
+
+Challenge6 Name: Patchwork Intrusion
+Medium
+Forensics:
+
+Description:
+
+A well-known APT group, PatchW, has resurfaced with a new stealthy campaign targeting our organization. Security alerts from Splunk, Snort, Wazuh, and OpenEDR indicate traces of an undetected compromise. Analysts suspect that an advanced adversary has infiltrated the network and may be exfiltrating sensitive data.
+
+1: Find the name of RAT ran by APT      75
+
+-------------------------
+
+Challenge7 Name: Gateway to secrets:
+
+Easy
+Reverse Eng:
+
+An intruder ran an executable on our system and uploading file to his ftp server. 
+
+1: Find username and passwords           25
+2: FLAG	 				 25
+		

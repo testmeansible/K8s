@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: activemq-challenge-deployment
+  labels:
+    app: activemq-challenge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: activemq-challenge
+  template:
+    metadata:
+      labels:
+        app: activemq-challenge
+    spec:
+      containers:
+      - name: activemq-challenge
+        image: mrstucknet/activemq-ctf:v1
+        ports:
+        - containerPort: 8161  # Make sure to use the correct port for your app

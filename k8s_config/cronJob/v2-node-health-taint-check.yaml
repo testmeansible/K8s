@@ -14,7 +14,7 @@ spec:
           serviceAccountName: node-health-check-sa  # Ensure correct permissions
           restartPolicy: OnFailure
           nodeSelector:
-            node-role.kubernetes.io/worker: "worker"  # Run only on worker nodes
+            node-role.kubernetes.io/worker: "true"  # Run only on worker nodes (adjust as needed if labels are assigned write here)
           containers:
           - name: node-health-taint-check
             image: bitnami/kubectl:latest

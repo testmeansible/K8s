@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: memc1-ctf
+  namespace: johnisme
+  labels:
+    app: memc1-ctf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: memc1-ctf
+  template:
+    metadata:
+      labels:
+        app: memc1-ctf
+    spec:
+      runtimeClassName: gvisor  # Secure runtime (optional)
+      serviceAccountName: blueteamapp-sa  # Uses correct service account
+
+      # Init Container for Flag Generation
+      initContainers:
+        - name: flag-generator
+          image: bitnami/kubectl:latest
+          command:
+            - /bin/sh
+            - -c
+            - |
+              SECRET_NAME="memc1-ctf-test"
+              NAMESPACE="johnisme"    # Replace with your desired namespace
+              
+              # Generate a secure random flag
+              FLAG="CTF-$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 16)"
+              echo "Generated Flag: $FLAG"
+
+              # Store the flag in a Kubernetes Secret
+              kubectl create secret generic $SECRET_NAME --from-literal=flag="$FLAG" --namespace $NAMESPACE --dry-run=apply -o yaml | kubectl apply -f -
+
+      # Main Container
+      containers:
+        - name: memc1
+          image: deadhell111/memc1:v1
+          securityContext:
+            allowPrivilegeEscalation: false  # Prevent privilege escalation attacks
+            readOnlyRootFilesystem: true  # Ensures root filesystem is immutable
+            seccompProfile:
+              type: RuntimeDefault  # Uses default syscall restrictions
+          env:
+            - name: SECRET_NAME
+              value: "memc1-ctf-test"
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Fetching flag from Secret: $SECRET_NAME"
+              FLAG=$(kubectl get secret $SECRET_NAME -n $NAMESPACE -o jsonpath="{.data.flag}" | base64 --decode)
+              echo "$FLAG" > /flag.txt
+              echo "Flag copied to /flag.txt"
+          resources:
+            limits:
+              cpu: "1"
+              memory: "512Mi"
+              ephemeral-storage: "1Gi"
+            requests:
+              cpu: "500m"
+              memory: "256Mi"
+              ephemeral-storage: "500Mi"

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pknock-pod
+spec:
+  containers:
+  - name: pknock-container
+    image: deadhell111/knock_update:v1

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zabbixx
+  labels:
+    app: zabbixx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zabbix-ctf
+  template:
+    metadata:
+      labels:
+        app: zabbix-ctf
+    spec:
+      containers:
+      - name: zabbix-ctf
+        image: abeerfatima/zabbixx:zabi
+        ports:
+        - containerPort: 80  # Make sure to use the correct port for your app
+      command:
+        agrs:
+        -  service zabbix-server restart && service zabbix-agent restart && service apache2 restart && service mysql restart

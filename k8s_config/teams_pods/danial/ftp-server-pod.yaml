@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: memc1-pod
+spec:
+  containers:
+  - name: memc1-container
+    image: abeerfatima/last-ftp:v1.0
+    ports:
+    - containerPort: 2222
+    - containerPort: 11211
+    - containerPort: 5000

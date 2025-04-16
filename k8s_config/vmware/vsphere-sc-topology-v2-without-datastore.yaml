@@ -1,0 +1,22 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: vsphere-thin-storage
+provisioner: csi.vsphere.vmware.com
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
+allowedTopologies:
+  - matchLabelExpressions:
+      - key: topology.csi.vmware.com/k8s-region
+        values:
+          - region-1
+      - key: topology.csi.vmware.com/k8s-zone
+        values:
+          - zone-A
+  - matchLabelExpressions:
+      - key: topology.csi.vmware.com/k8s-region
+        values:
+          - region-1
+      - key: topology.csi.vmware.com/k8s-zone
+        values:
+          - zone-B

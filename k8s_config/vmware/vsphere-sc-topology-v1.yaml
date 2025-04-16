@@ -1,0 +1,16 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: vsphere-thin-storage
+provisioner: csi.vsphere.vmware.com
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer  # ✅ Ensures volume is provisioned only when pod is scheduled
+allowedTopologies:
+  - matchLabelExpressions:
+      - key: topology.csi.vmware.com/datastore
+        values:
+          - DataStore1-252
+  - matchLabelExpressions:
+      - key: topology.csi.vmware.com/datastore
+        values:
+          - DataStore1-253

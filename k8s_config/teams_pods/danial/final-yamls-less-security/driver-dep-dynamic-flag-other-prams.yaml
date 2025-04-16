@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: driver-ctf
+  labels:
+    app: driver-ctf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: driver-ctf
+  template:
+    metadata:
+      labels:
+        app: driver-ctf
+    spec:
+      runtimeClassName: gvisor  # Secure runtime 
+      # restartPolicy: Always  # Explicitly set
+
+      containers:
+        - name: driver
+          image: 192.168.3.46:5000/driver-ctf5:v1
+          securityContext:
+            # allowPrivilegeEscalation: false  # Prevent privilege escalation attacks
+            # readOnlyRootFilesystem: true  # Ensures root filesystem is immutable
+            seccompProfile:
+              type: RuntimeDefault  # Uses default syscall restrictions
+          resources:
+            limits:
+              cpu: "1"
+              memory: "512Mi"
+              ephemeral-storage: "1Gi"
+            requests:
+              cpu: "500m"
+              memory: "256Mi"
+              ephemeral-storage: "500Mi"

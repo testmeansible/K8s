@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: windows10-ctf-deployment
+  # namespace: it  # Uncomment if deploying to a specific namespace
+spec:
+  replicas: 1  # Adjust based on your worker node count
+  selector:
+    matchLabels:
+      app: win10-ctf
+  template:
+    metadata:
+      labels:
+        app: win10-ctf
+    spec:
+      # runtimeClassName: gvisor  # Use gVisor for sandboxing
+      terminationGracePeriodSeconds: 5
+      restartPolicy: Always  # Explicit restart policy
+      containers:
+        - name: win10-ctf
+          image: 192.168.3.46:5000/windows10:ctf
+          securityContext:
+            privileged: true  # Required for KVM access
+            seccompProfile:
+              type: RuntimeDefault  # Use the default seccomp profile
+          volumeMounts:
+            - mountPath: /dev/kvm  # Ensure KVM is mounted
+              name: dev-kvm-mod
+          resources:  # Set resource limits to prevent excessive usage
+            limits:
+              cpu: "5"
+              memory: "5Gi"
+              ephemeral-storage: "50Gi"
+            requests:
+              cpu: "4"
+              memory: "4Gi"
+              ephemeral-storage: "30Gi"
+      volumes:
+        - name: dev-kvm-mod
+          hostPath:
+            path: /dev/kvm

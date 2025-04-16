@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpmyadmin-ctf-deployment
+  labels:
+    app: phpmyadmin-ctf-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpmyadmin-ctf
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin-ctf
+    spec:
+      # runtimeClassName: gvisor  # Secure runtime (optional)
+      # restartPolicy: Always  # Explicitly set
+      containers:
+        - name: phpmyadmin
+          image: 192.168.3.46:5000/phpmyadmin-ctf:v1
+          securityContext:
+            allowPrivilegeEscalation: false  # Prevent privilege escalation attacks
+            # readOnlyRootFilesystem: true  # Ensures root filesystem is immutable
+            # seccompProfile:
+            #   type: RuntimeDefault  # Uses default syscall restrictions
+          command: ["/bin/bash", "-c"]
+          args:
+            - service apache2 start && service mysql start && tail -f /dev/null
+          resources:
+            limits:
+              cpu: "1"
+              memory: "512Mi"
+              ephemeral-storage: "5Gi"
+            requests:
+              cpu: "500m"
+              memory: "256Mi"
+              ephemeral-storage: "4Gi"

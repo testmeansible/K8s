@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: windows-pvc-80-server-2022-01
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 80Gi
+  storageClassName: thin-disk-policy-253
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: windows-pvc-1-server-2022-02
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: thin-disk-policy-253
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: windows-deployment-mod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: windows-app-mod
+  template:
+    metadata:
+      labels:
+        app: windows-app-mod
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: topology.csi.vmware.com/k8s-region
+                    operator: In
+                    values:
+                      - region-1  # Ensure it is scheduled in region-1
+                  - key: topology.csi.vmware.com/k8s-zone
+                    operator: In
+                    values:
+                      - zone-B    # Ensure it is scheduled in zone-A
+      containers:
+        - name: windows-container
+          image: learningdevops05/kvm-win-server-2022:v4
+          volumeMounts:
+            - mountPath: /storage
+              name: windows-storage-mod
+            - mountPath: /oem
+              name: windows-oem-mod
+            - mountPath: /dev/kvm
+              name: dev-kvm-mod
+          command: [sh, -c, 'cp -r /mnt/storage/* /storage/ && /usr/bin/tini -s /run/entry.sh']
+          securityContext: # Add security context here
+            privileged: true
+          resources:
+            requests:
+              cpu: "2"         # Reserve 1 CPU for the container
+              memory: "4Gi"     # Reserve 2Gi memory
+            limits:
+              cpu: "2"            # Allow up to 2 CPU usage
+              memory: "5Gi"       # Allow up to 4Gi memory
+      volumes:
+        - name: windows-storage-mod
+          persistentVolumeClaim:
+            claimName: windows-pvc-80-server-2022-01 # Ensure the PVC exists in the new namespace
+        - name: windows-oem-mod
+          persistentVolumeClaim:
+            claimName: windows-pvc-1-server-2022-02 # Ensure the PVC exists in the new namespace
+        - name: dev-kvm-mod
+          hostPath:
+            path: /dev/kvm

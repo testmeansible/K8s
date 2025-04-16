@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: memc1-ctf
+  labels:
+    app: memc1-ctf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: memc1-ctf
+  template:
+    metadata:
+      labels:
+        app: memc1-ctf
+    spec:
+      runtimeClassName: gvisor  # Secure runtime (optional)
+      # restartPolicy: Always  # Explicitly set
+
+      containers:
+        - name: memc1
+          image: 192.168.3.46:5000/memfuff_static:v1
+          securityContext:
+            # allowPrivilegeEscalation: false  # Prevent privilege escalation attacks
+            # readOnlyRootFilesystem: true  # Ensures root filesystem is immutable
+            seccompProfile:
+              type: RuntimeDefault  # Uses default syscall restrictions
+          env:
+            - name: TEAM_NAME
+              value: "competition"  # Example variable for CTF mode
+          resources:
+            limits:
+              cpu: "1"
+              memory: "512Mi"
+              ephemeral-storage: "1Gi"
+            requests:
+              cpu: "500m"
+              memory: "256Mi"
+              ephemeral-storage: "500Mi"

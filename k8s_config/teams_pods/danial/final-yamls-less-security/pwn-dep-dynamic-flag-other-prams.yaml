@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pwn-ctf
+  labels:
+    app: pwn-ctf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pwn-ctf
+  template:
+    metadata:
+      labels:
+        app: pwn-ctf
+    spec:
+      runtimeClassName: gvisor  # Secure runtime (optional)
+      # restartPolicy: Always  # Explicitly set
+
+      containers:
+        - name: pwn
+          image: 192.168.3.46:5000/pwn_challenge:v1
+          securityContext:
+            # allowPrivilegeEscalation: false  # Prevent privilege escalation attacks
+            # readOnlyRootFilesystem: true  # Ensures root filesystem is immutable
+            seccompProfile:
+              type: RuntimeDefault  # Uses default syscall restrictions
+          resources:
+            limits:
+              cpu: "1"
+              memory: "512Mi"
+              ephemeral-storage: "1Gi"
+            requests:
+              cpu: "500m"
+              memory: "256Mi"
+              ephemeral-storage: "500Mi"

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: windows10-deployment
+  namespace: default
+spec:
+  replicas: 1  # Adjust based on your worker node count
+  selector:
+    matchLabels:
+      app: win10-b
+  template:
+    metadata:
+      labels:
+        app: win10-b
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: win10-b
+        image: 192.168.3.46:5000/windows10:blank
+        volumeMounts:
+            - mountPath: /storage
+              name: windows-storage-mod
+      volumes:
+        - name: dev-kvm-mod
+          hostPath:
+            path: /dev/kvm

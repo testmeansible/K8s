@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: activemq-ctf
+  labels:
+    app: activemq-ctf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: activemq-ctf
+  template:
+    metadata:
+      labels:
+        app: activemq-ctf
+    spec:
+      runtimeClassName: gvisor  # Secure runtime
+      restartPolicy: Always  # Ensure the pod is always restarted
+      containers:
+        - name: activemq
+          image: 192.168.3.46:5000/activemq-ctf:v1
+          securityContext:
+            allowPrivilegeEscalation: false  # Prevent privilege escalation attacks
+            readOnlyRootFilesystem: true  # Prevents modifications in root FS
+            seccompProfile:
+              type: RuntimeDefault  # Uses default syscall restrictions
+          volumeMounts:
+            - name: tmp-storage
+              mountPath: /tmp  # Uses `/tmp` for temporary storage
+          resources:
+            limits:
+              cpu: "1"
+              memory: "512Mi"
+              ephemeral-storage: "1Gi"  # Limit ephemeral storage
+            requests:
+              cpu: "500m"
+              memory: "256Mi"
+              ephemeral-storage: "500Mi"  # Minimum guaranteed storage
+      volumes:
+        - name: tmp-storage
+          emptyDir: {}  # Uses node storage but gets wiped when the pod stops

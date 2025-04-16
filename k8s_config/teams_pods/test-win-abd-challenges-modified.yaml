@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: windows10-deployment
+  namespace: default
+spec:
+  replicas: 1  # Adjust based on worker node count
+  selector:
+    matchLabels:
+      app: win10-b
+  template:
+    metadata:
+      labels:
+        app: win10-b
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+        - name: win10-b
+          image: 192.168.3.46:5000/windows10:v1
+          securityContext:
+            privileged: true  #  Corrected placement (applies only to this container)
+          volumeMounts:
+            - mountPath: /dev/kvm
+              name: dev-kvm-mod
+          resources:  #  Added to manage resource usage
+            limits:
+              cpu: "4"
+              memory: "5Gi"
+            requests:
+              cpu: "4"
+              memory: "4Gi"
+      volumes:
+        - name: dev-kvm-mod
+          hostPath:
+            path: /dev/kvm

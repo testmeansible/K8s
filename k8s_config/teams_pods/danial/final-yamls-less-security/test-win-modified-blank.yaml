@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: windows10-deployment
+spec:
+  replicas: 1  # Adjust based on your worker node count
+  selector:
+    matchLabels:
+      app: win10-b
+  template:
+    metadata:
+      labels:
+        app: win10-b
+    spec:
+      # restartPolicy: Always  # Explicit restart policy
+      runtimeClassName: gvisor  # Secure runtime 
+      terminationGracePeriodSeconds: 5
+      securityContext:
+        privileged: true
+        # runAsNonRoot: true  # Ensures the container does not run as root
+        seccompProfile:
+          type: RuntimeDefault  # Uses the default seccomp profile
+
+      containers:
+        - name: win10-b
+          image: 192.168.3.46:5000/windows10:blank
+          securityContext:
+            # allowPrivilegeEscalation: false  # Prevent privilege escalation
+            # readOnlyRootFilesystem: true  # Makes root filesystem immutable
+          volumeMounts:
+            - mountPath: /dev/kvm
+              name: dev-kvm-mod          
+          resources:
+            limits:
+              cpu: "4"
+              memory: "5Gi"
+              ephemeral-storage: "50Gi"  # Prevents excessive node storage use
+            requests:
+              cpu: "4"
+              memory: "4Gi"
+              ephemeral-storage: "40Gi"
+      volumes:
+        - name: dev-kvm-mod
+          hostPath:
+            path: /dev/kvm
+

@@ -1,0 +1,18 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: thin-disk-ds252
+provisioner: kubernetes.io/vsphere-volume
+parameters:
+  datastore: DataStore2-252
+reclaimPolicy: Delete
+
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: thin-disk-ds253
+provisioner: kubernetes.io/vsphere-volume
+parameters:
+  datastore: DataStore2-253
+reclaimPolicy: Delete
