@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: loghunter-1-sandbox-pod
+  # namespace: it  # Update or remove based on your setup
+  labels:
+    app: loghunter-1-sandbox
+spec:
+  restartPolicy: Always
+  containers:
+    - name: loghunter-1-container
+      image: '192.168.1.15:5000/loghunter:1.0'
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        privileged: true
+        # allowPrivilegeEscalation: true
+        # readOnlyRootFilesystem: false
+        seccompProfile:
+          type: RuntimeDefault
+      resources:
+        limits:
+          cpu: "2"
+          memory: "2Gi"
+          ephemeral-storage: "10Gi"
+        requests:
+          cpu: "1"
+          memory: "1Gi"
+          ephemeral-storage: "5Gi"

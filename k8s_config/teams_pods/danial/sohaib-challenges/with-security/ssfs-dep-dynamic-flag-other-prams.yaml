@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ssfs-ctf
+  labels:
+    app: ssfs-ctf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ssfs-ctf
+  template:
+    metadata:
+      labels:
+        app: ssfs-ctf
+    spec:
+      runtimeClassName: gvisor  # Secure runtime 
+      # restartPolicy: Always  # Explicitly set
+      containers:
+        - name: ssfs
+          image: abeerfatima/ssfs-challenge
+          securityContext:
+            # allowPrivilegeEscalation: false  # Prevent privilege escalation attacks
+            # readOnlyRootFilesystem: true  # Ensures root filesystem is immutable
+            seccompProfile:
+              type: RuntimeDefault  # Uses default syscall restrictions
+          resources:
+            limits:
+              cpu: "1"
+              memory: "512Mi"
+              ephemeral-storage: "1Gi"
+            requests:
+              cpu: "500m"
+              memory: "256Mi"
+              ephemeral-storage: "500Mi"

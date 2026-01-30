@@ -1,0 +1,26 @@
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: who-let-ransomeware-out--flag
+#   # namespace: 
+# type: Opaque
+# stringData:
+#   flag: Cyberrange{default-Arzs64iyCBIiKd1jBPPPtC0TwrwLzyCc}
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: who-let-ransomeware-out-challenge
+  labels:
+    app: who-let-ransomeware-out-challenge
+spec:
+  restartPolicy: Never
+  containers:
+    - name: who-let-ransomeware-out-challenge
+      image: '192.168.3.46:5000/who-let-the-ransomeware-out:v1'
+      env:
+        - name: FLAG
+          valueFrom:
+            secretKeyRef:
+              name: viper-flag
+              key: flag

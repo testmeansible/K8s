@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: escape-me-again
+  namespace: default
+  labels:
+    app: escape
+spec:
+  restartPolicy: Never
+  containers:
+  - name: challenge
+    image: 192.168.3.46:5000/nomi089/misc:e-misc-escape-me-again
+    command: ["/bin/bash", "-c"]
+    args:
+      - echo "$FLAG" > /root/flag.txt && chmod 400 /root/flag.txt && ./run.sh
+    env:
+    - name: FLAG
+      valueFrom:
+        secretKeyRef:
+          name: escape-flag
+          key: flag

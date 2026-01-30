@@ -19,7 +19,7 @@ spec:
 
       containers:
         - name: phpmyadmin
-          image: 192.168.3.46:5000/phpmyadmin-ctf:v1
+          image: circuitx/phpmyadmin-ctf   # 192.168.3.46:5000/phpmyadmin-ctf:v1
           securityContext:
             allowPrivilegeEscalation: false  # Prevent privilege escalation attacks
             readOnlyRootFilesystem: true  # Ensures root filesystem is immutable

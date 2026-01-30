@@ -1,0 +1,17 @@
+# ------------------------------
+# ALLOW VPN ACCESS TO TEAM-A ONLY
+# ------------------------------
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-vpn-to-team-a
+spec:
+  order: 90
+  namespaceSelector: kubernetes.io/metadata.name == "team-a"  # Get the team-a namespace
+  types:
+    - Ingress
+  ingress:
+    - action: Allow
+      source:
+        nets:
+          - 10.8.10.0/24                                  # VPN subnet associated with team-a (change it with your teams subnet)

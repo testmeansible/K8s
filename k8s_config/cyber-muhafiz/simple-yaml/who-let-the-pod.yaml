@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ransomware-sandbox-pod
+  # namespace: it  # Update or remove based on your setup
+  labels:
+    app: ransomware-sandbox
+spec:
+  restartPolicy: Always
+  containers:
+    - name: ransomware-container
+      image: '192.168.3.46:5000/who-let-the-ransomeware-out:v1'
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        privileged: true
+        # allowPrivilegeEscalation: true
+        # readOnlyRootFilesystem: false
+        seccompProfile:
+          type: RuntimeDefault
+      resources:
+        limits:
+          cpu: "4"
+          memory: "5Gi"
+          ephemeral-storage: "50Gi"
+        requests:
+          cpu: "4"
+          memory: "4Gi"
+          ephemeral-storage: "50Gi"
+      volumeMounts:
+        - name: kvm
+          mountPath: /dev/kvm
+  volumes:
+    - name: kvm
+      hostPath:
+        path: /dev/kvm
+        type: CharDevice

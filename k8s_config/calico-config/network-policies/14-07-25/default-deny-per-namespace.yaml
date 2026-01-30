@@ -1,0 +1,13 @@
+# ------------------------------
+# DEFAULT DENY PER NAMESPACE (DEFENSE IN DEPTH)
+# ------------------------------
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny
+  namespace: team-a
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress

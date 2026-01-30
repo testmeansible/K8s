@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openvpn
+  labels:
+    app: openvpn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openvpn
+  template:
+    metadata:
+      labels:
+        app: openvpn
+    spec:
+      containers:
+      - name: openvpn
+        image: 192.168.3.46:5000/openvpn:v1
+        ports:
+        - containerPort: 1194
+          protocol: UDP
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN
+          privileged: true
+        volumeMounts:
+        - mountPath: /dev/net/tun
+          name: dev-net-tun
+      volumes:
+      - name: dev-net-tun
+        hostPath:
+          path: /dev/net/tun

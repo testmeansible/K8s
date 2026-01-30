@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devguru-deployment-ctf
+  labels:
+    app: devguru-ctf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devguru-ctf
+  template:
+    metadata:
+      labels:
+        app: devguru-ctf
+    spec:
+      # runtimeClassName: gvisor  # Secure runtime 
+      # restartPolicy: Always  # Explicitly set
+      containers:
+        - name: devguru
+          image: abeerfatima/devguru-final:v1
+          securityContext:
+            privileged: true
+          #   # allowPrivilegeEscalation: false  # Prevent privilege escalation attacks
+          #   # readOnlyRootFilesystem: true  # Ensures root filesystem is immutable
+          #   seccompProfile:
+          #     type: RuntimeDefault  # Uses default syscall restrictions
+          resources:
+            limits:
+              cpu: "2"
+              memory: "2Gi"
+              ephemeral-storage: "20Gi"
+            requests:
+              cpu: "1"
+              memory: "1Gi"
+              ephemeral-storage: "15Gi"
+          volumeMounts:
+            - name: kvm
+              mountPath: /dev/kvm
+      volumes:
+        - name: kvm
+          hostPath:
+            path: /dev/kvm

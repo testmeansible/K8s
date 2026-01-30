@@ -1,0 +1,33 @@
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: default-deny
+  namespace: team-2
+spec:
+  selector: all()
+  types:
+  - Ingress
+  - Egress
+
+
+---
+
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: allow-vpn-to-team-2
+  namespace: team-2
+spec:
+  selector: all()
+  ingress:
+  - action: Allow
+    source:
+      nets:
+        - 172.35.2.0/27   # Reserved IP range for team-2 VPN users
+  egress:
+  - action: Allow
+    destination:
+      selector: all()
+  types:
+  - Ingress
+  - Egress

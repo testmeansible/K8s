@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bank-deployment-ctf
+  labels:
+    app: bank-ctf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bank-ctf
+  template:
+    metadata:
+      labels:
+        app: bank-ctf
+    spec:
+      # runtimeClassName: gvisor  # Secure runtime 
+      # restartPolicy: Always  # Explicitly set
+      containers:
+        - name: bank
+          image: abeerfatima/bank-heist:v1
+          # securityContext:
+          #   # allowPrivilegeEscalation: false  # Prevent privilege escalation attacks
+          #   # readOnlyRootFilesystem: true  # Ensures root filesystem is immutable
+          #   seccompProfile:
+          #     type: RuntimeDefault  # Uses default syscall restrictions
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+              ephemeral-storage: "500Gi"
+            requests:
+              cpu: "300m"
+              memory: "128Mi"
+              ephemeral-storage: "250Mi"

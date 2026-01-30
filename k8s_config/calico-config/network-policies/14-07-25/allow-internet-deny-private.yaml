@@ -1,0 +1,24 @@
+# ------------------------------
+# DENY EGRESS TO PRIVATE NETWORKS (RFC1918)
+# ALLOW INTERNET
+# ------------------------------
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: deny-egress-to-private-networks
+spec:
+  order: 200
+  selector: all()
+  types:
+    - Egress
+  egress:
+    - action: Deny
+      destination:
+        nets:
+          - 10.0.0.0/8
+          - 172.16.0.0/12
+          - 192.168.0.0/16
+    - action: Allow
+      destination:
+        nets:
+          - 0.0.0.0/0

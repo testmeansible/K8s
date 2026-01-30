@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: bind-cyberrange-app
+subjects:
+- kind: ServiceAccount
+  name: cyberrange-app
+  namespace: ctf-control
+roleRef:
+  kind: ClusterRole
+  name: cyberrange-cluster-controller
+  apiGroup: rbac.authorization.k8s.io

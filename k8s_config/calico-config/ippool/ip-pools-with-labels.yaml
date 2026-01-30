@@ -1,0 +1,96 @@
+# ip-pools.yaml
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-1-ip-pool
+  labels:
+    status: available 
+spec:
+  cidr: 172.35.1.0/24
+  ipipMode: Always
+  vxlanMode: Never
+  natOutgoing: true
+  nodeSelector: all()
+  # disabled: false
+  blockSize: 26
+
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-2-ip-pool
+  labels:
+    status: available 
+spec:
+  cidr: 172.35.2.0/24
+  ipipMode: Always
+  vxlanMode: Never
+  natOutgoing: true
+  nodeSelector: all()
+  # disabled: false
+  blockSize: 26
+
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-3-ip-pool
+  labels:
+    status: available 
+spec:
+  cidr: 172.35.3.0/24
+  ipipMode: Always
+  vxlanMode: Never
+  natOutgoing: true
+  nodeSelector: all()
+  # disabled: false
+  blockSize: 26
+
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-4-ip-pool
+  labels:
+    status: available 
+spec:
+  cidr: 172.35.4.0/24
+  ipipMode: Always
+  vxlanMode: Never
+  natOutgoing: true
+  nodeSelector: all()
+  # disabled: false
+  blockSize: 26
+
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-5-ip-pool
+  labels:
+    status: available 
+spec:
+  cidr: 172.35.5.0/24
+  ipipMode: Always
+  vxlanMode: Never
+  natOutgoing: true
+  nodeSelector: all()
+  # disabled: false
+  blockSize: 26
+
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: team-6-ip-pool
+  labels:
+    status: available 
+spec:
+  cidr: 172.35.6.0/24
+  ipipMode: Always
+  vxlanMode: Never
+  natOutgoing: true
+  nodeSelector: all()
+  # disabled: false
+  blockSize: 26

@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: viper-challenge
+  namespace: default
+  labels:
+    app: challenge
+spec:
+  restartPolicy: Never
+  containers:
+  - name: challenge
+    image: 192.168.3.46:5000/ctf_viper:latest
+    ports:
+    - containerPort: 1337
+      name: challenge-port
+    env:
+    - name: FLAG
+      valueFrom:
+        secretKeyRef:
+          name: viper-flag
+          key: flag

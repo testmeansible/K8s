@@ -1,0 +1,25 @@
+# ------------------------------
+# DENY ALL INTER-NAMESPACE COMMUNICATION
+# ------------------------------
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: deny-inter-namespace
+spec:
+  order: 100
+  selector: all()
+  types:
+    - Ingress
+    - Egress
+  ingress:
+    - action: Deny
+      source:
+        notNamespaceSelector: has(kubernetes.io/metadata.name)
+  egress:
+    - action: Deny
+      destination:
+        notNamespaceSelector: has(kubernetes.io/metadata.name)
+    - action: Deny
+      destination:
+        services:
+          namespaceSelector: has(kubernetes.io/metadata.name)

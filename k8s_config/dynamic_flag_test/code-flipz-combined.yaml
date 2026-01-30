@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: flipz-flag
+  # namespace: it
+type: Opaque
+stringData:
+  flag: Cyberrange{it-Arzs64iyCBIiKd1jBPPPtC0TwrwLzyCc}
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: flipz-challenge
+  # namespace: it
+  labels:
+    app: flipz-challenge
+spec:
+  restartPolicy: Never
+  containers:
+    - name: flipz-challenge
+      image: '192.168.3.46:5000/code_flipz:latest'
+      env:
+        - name: FLAG
+          valueFrom:
+            secretKeyRef:
+              name: flipz-flag
+              key: flag

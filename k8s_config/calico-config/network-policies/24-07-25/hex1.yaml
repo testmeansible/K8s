@@ -1,0 +1,19 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: deny-cross-ns-hex1
+spec:
+  order: 100
+  namespaceSelector: kubernetes.io/metadata.name == "hex1"
+  selector: all()
+  types:
+    - Ingress
+    - Egress
+  ingress:
+    - action: Deny
+      source:
+        namespaceSelector: kubernetes.io/metadata.name != "hex1"
+  egress:
+    - action: Deny
+      destination:
+        namespaceSelector: kubernetes.io/metadata.name != "hex1"
